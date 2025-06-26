@@ -70,7 +70,7 @@
             <div class="content-header sty-one">
                 <h1>@yield('page-title')</h1>
                 <ol class="breadcrumb">
-                    <li><a href="{{ route('admin.dashboard') }}">Home</a></li>
+                    <li><a href="{{ route('admin.dashboard') }}">{{ ucfirst(session('USER_ROLE')) }}</a></li>
 
                     @php
                         $segment1 = request()->segment(2); // like 'settings'

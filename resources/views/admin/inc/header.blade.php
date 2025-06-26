@@ -23,7 +23,7 @@
                          <li>
                              <ul class="menu">
                                  <li><a href="#">
-                                         <div class="pull-left"><img src="{{ asset('user-icon.webp') }}"
+                                         <div class="pull-left"><img src="{{{ asset('user-icon.webp') }}}"
                                                  class="img-circle" alt="User Image"> <span
                                                  class="profile-status online pull-right"></span></div>
                                          <h4>Alex C. Patton</h4>
@@ -102,13 +102,27 @@
                  </li>
                  <!-- User Account  -->
                  <li class="dropdown user user-menu p-ph-res"> <a href="#" class="dropdown-toggle"
-                         data-toggle="dropdown"> <img src="{{ asset('user-icon.webp') }}" class="user-image"
-                             alt="User Image"> <span class="hidden-xs">Alexander Pierce</span> </a>
+                         data-toggle="dropdown"> 
+                        @if (session('USER_PROFILE_IMAGE'))
+                            <img src="{{ asset('uploads/profile/' . session('USER_PROFILE_IMAGE')) }}"
+                                 class="user-image" alt="User Image">
+                        @else
+                            <img src="{{ asset('user-icon.webp') }}"  class="user-image" alt="User Image">
+                        @endif
+
+                         <span class="hidden-xs">{{ session('USER_NAME') }}</span> </a>
                      <ul class="dropdown-menu">
                          <li class="user-header">
-                             <div class="pull-left user-img"><img src="{{ asset('user-icon.webp') }}"
-                                     class="img-responsive img-circle" alt="User"></div>
-                             <p class="text-left">Alexander Pierce <small>alexander@gmail.com</small> </p>
+                             <div class="pull-left user-img">
+                                 @if (session('USER_PROFILE_IMAGE'))
+                                     <img src="{{ asset('uploads/profile/' . session('USER_PROFILE_IMAGE')) }}"
+                                          class="img-responsive img-circle" alt="User">
+                                 @else
+                                     <img src="{{ asset('user-icon.webp') }}" class="img-responsive img-circle" alt="User">
+                                 @endif
+                             </div>
+                             <p class="text-left">{{ session('USER_NAME') }} <small style="font-size: 10px;">{{ session('USER_EMAIL') }}</small>
+                             </p>
                          </li>
                          <li><a href="#"><i class="icon-profile-male"></i> My Profile</a></li>
                          <li><a href="#"><i class="icon-wallet"></i> My Balance</a></li>
@@ -116,7 +130,7 @@
                          <li role="separator" class="divider"></li>
                          <li><a href="#"><i class="icon-gears"></i> Account Setting</a></li>
                          <li role="separator" class="divider"></li>
-                         <li><a href="#"><i class="fa fa-power-off"></i> Logout</a></li>
+                         <li><a href="{{ route('logout') }}"><i class="fa fa-power-off"></i> Logout</a></li>
                      </ul>
                  </li>
 
