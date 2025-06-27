@@ -1,7 +1,6 @@
  <!-- /.content-wrapper -->
  <footer class="main-footer">
-     <div class="pull-right hidden-xs">Version 1.0</div>
-     Copyright © 2018 Yourdomian. All rights reserved.
+     <div class="text-center">Copyright © 2025 AdminPanel. All rights reserved.</div>
  </footer>
 
  <!-- Control Sidebar -->

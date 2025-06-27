@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\admin\AdminController;
+use App\Http\Controllers\admin\ProfileController;
 use App\Http\Controllers\admin\SettingController;
 use Illuminate\Support\Facades\Route;
 
@@ -16,5 +17,5 @@ Route::post('/admin/mail-settings/update', [SettingController::class, 'mailSetti
 Route::get('/admin/whmcs-api-settings', [SettingController::class, 'whmcsApiSettings'])->name('admin.whmcs.api.settings');
 Route::post('/admin/whmcs-api-settings/update', [SettingController::class, 'updateWhmcsApiSettings'])->name('admin.whmcs.api.settings.update');
 
-Route::get('/admin/profiles', [AdminController::class, 'profiles'])->name('admin.profiles');
-Route::get('/admin/manage-profile/{id?}', [AdminController::class, 'manageProfile'])->name('admin.manage.profile');
+Route::get('/admin/profiles', [ProfileController::class, 'profile'])->name('manage.profiles');
+Route::post('/profile/insert', [ProfileController::class, 'insert'])->name('profile.insert');
