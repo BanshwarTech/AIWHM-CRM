@@ -23,11 +23,11 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/admin', [AdminController::class, 'dashboard'])->name('admin.dashboard');
 
     // 📝 Task Management
-    Route::prefix('admin/tasks')->controller(TaskController::class)->group(function () {
-        Route::get('/', 'tasks')->name('admin.tasks');
-        Route::get('/manage/{id?}', 'manageTasks')->name('admin.manage.tasks');
-        Route::post('/manage/create/{id?}', 'manageTasksCreate')->name('admin.manage.tasks.create');
-        Route::delete('/destroy/{id}', 'destroyTask')->name('admin.tasks.destroy');
+    Route::prefix('tasks')->controller(TaskController::class)->group(function () {
+        Route::get('/', 'tasks')->name('tasks');
+        Route::get('/manage/{id?}', 'manageTasks')->name('manage.tasks');
+        Route::post('/manage/create/{id?}', 'manageTasksCreate')->name('manage.tasks.create');
+        Route::delete('/destroy/{id}', 'destroyTask')->name('tasks.destroy');
     });
 
     // ⚙️ Settings

@@ -98,7 +98,7 @@
 
                     {{-- Tasks Menu --}}
                     @php
-                        $tasksActive = request()->routeIs('admin.tasks') || request()->routeIs('admin.manage.tasks');
+                        $tasksActive = request()->routeIs('tasks') || request()->routeIs('manage.tasks');
                     @endphp
                     <li class="treeview {{ $tasksActive ? 'active' : '' }}">
                         <a href="#">
@@ -107,13 +107,13 @@
                             <span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span>
                         </a>
                         <ul class="treeview-menu">
-                            <li class="{{ request()->routeIs('admin.tasks') ? 'active' : '' }}">
-                                <a href="{{ route('admin.tasks') }}">
+                            <li class="{{ request()->routeIs('tasks') ? 'active' : '' }}">
+                                <a href="{{ route('tasks') }}">
                                     <i class="fa fa-angle-right"></i> All Tasks
                                 </a>
                             </li>
-                            <li class="{{ request()->routeIs('admin.manage.tasks') ? 'active' : '' }}">
-                                <a href="{{ route('admin.manage.tasks') }}">
+                            <li class="{{ request()->routeIs('manage.tasks') ? 'active' : '' }}">
+                                <a href="{{ route('manage.tasks') }}">
                                     <i class="fa fa-angle-right"></i> Manage Tasks
                                 </a>
                             </li>

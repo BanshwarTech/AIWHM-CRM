@@ -8,7 +8,7 @@
         <div class="card-body">
             <h4 class="text-black">{{ isset($task) ? 'Update ' : 'Create ' }} Task</h4>
 
-            <form class="form-horizontal form-material" action="{{ route('admin.manage.tasks.create', $task->id ?? '') }}"
+            <form class="form-horizontal form-material" action="{{ route('manage.tasks.create', $task->id ?? '') }}"
                 method="POST">
                 @csrf
                 <div class="row">

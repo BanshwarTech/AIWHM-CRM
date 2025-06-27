@@ -27,6 +27,7 @@ class TaskController extends Controller
 
     public function manageTasksCreate(Request $request, $id = null)
     {
+        // dd($request->all());
         try {
             // Validate input
             $validator = Validator::make($request->all(), [
@@ -53,7 +54,7 @@ class TaskController extends Controller
                 $message = 'Task created successfully.';
             }
 
-            return redirect()->route('admin.tasks')->with('success', $message);
+            return redirect()->route('tasks')->with('success', $message);
         } catch (\Exception $e) {
             Log::error('Task creation/update failed: ' . $e->getMessage(), [
                 'exception' => $e,
@@ -71,7 +72,7 @@ class TaskController extends Controller
             $task = Task::findOrFail($id);
             $task->delete();
 
-            return redirect()->route('admin.tasks')->with('success', 'Task deleted successfully.');
+            return redirect()->route('tasks')->with('success', 'Task deleted successfully.');
         } catch (\Exception $e) {
             Log::error('Task deletion failed: ' . $e->getMessage());
             return redirect()->back()->with('error', 'An error occurred while deleting the task.');

@@ -31,10 +31,9 @@
                                 <td>{{ $task->start_date }} - {{ $task->due_date }}</td>
                                 <td>{{ $task->status }}</td>
                                 <td>
-                                    <a href="{{ route('admin.manage.tasks', $task->id) }}"
-                                        class="btn btn-sm btn-primary">Edit</a>
+                                    <a href="{{ route('manage.tasks', $task->id) }}" class="btn btn-sm btn-primary">Edit</a>
 
-                                    <form action="{{ route('admin.tasks.destroy', $task->id) }}" method="POST"
+                                    <form action="{{ route('tasks.destroy', $task->id) }}" method="POST"
                                         style="display:inline;">
                                         @csrf
                                         @method('DELETE')
