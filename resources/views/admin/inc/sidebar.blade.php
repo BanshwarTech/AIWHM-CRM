@@ -4,13 +4,12 @@
     <div class="sidebar">
         <!-- Sidebar user panel -->
         <div class="user-panel">
-            <div class="image text-center"><img src="{{ asset('dist/img/img1.jpg') }}" class="img-circle"
-                    alt="User Image">
+            <div class="image text-center"><img src="{{ asset('dist/img/img1.jpg') }}" class="img-circle" alt="User Image">
             </div>
             <div class="info">
                 <p>Alexander Pierce</p>
-                <a href="#"><i class="fa fa-envelope"></i></a> <a href="#"><i class="fa fa-gear"></i></a> <a href="#"><i
-                        class="fa fa-power-off"></i></a>
+                <a href="#"><i class="fa fa-envelope"></i></a> <a href="#"><i class="fa fa-gear"></i></a> <a
+                    href="#"><i class="fa fa-power-off"></i></a>
             </div>
         </div>
 
@@ -73,7 +72,8 @@
 
                     {{-- Profile Menu --}}
                     @php
-                        $profileActive = request()->segment(2) === 'profile';
+                        // $profileActive = request()->segment(2) === 'profile';
+                        $profileActive = request()->routeIs('profile') || request()->routeIs('manage.profiles');
                     @endphp
                     <li class="treeview {{ $profileActive ? 'active' : '' }}">
                         <a href="#">
@@ -83,14 +83,38 @@
                         </a>
                         <ul class="treeview-menu">
                             {{-- Use actual route names for app submenus below --}}
-                            <li class="{{ request()->routeIs('') ? 'active' : '' }}">
-                                <a href="">
+                            <li class="{{ request()->routeIs('profile') ? 'active' : '' }}">
+                                <a href="{{ route('profile') }}">
                                     <i class="fa fa-angle-right"></i> Profiles
                                 </a>
                             </li>
                             <li class="{{ request()->routeIs('manage.profiles') ? 'active' : '' }}">
                                 <a href="{{ route('manage.profiles') }}">
-                                    <i class="fa fa-angle-right"></i> Add Profiles
+                                    <i class="fa fa-angle-right"></i> Manage Profile
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+
+                    {{-- Tasks Menu --}}
+                    @php
+                        $tasksActive = request()->routeIs('admin.tasks') || request()->routeIs('admin.manage.tasks');
+                    @endphp
+                    <li class="treeview {{ $tasksActive ? 'active' : '' }}">
+                        <a href="#">
+                            <i class="icon-grid"></i>
+                            <span class="routeParts">Tasks</span>
+                            <span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span>
+                        </a>
+                        <ul class="treeview-menu">
+                            <li class="{{ request()->routeIs('admin.tasks') ? 'active' : '' }}">
+                                <a href="{{ route('admin.tasks') }}">
+                                    <i class="fa fa-angle-right"></i> All Tasks
+                                </a>
+                            </li>
+                            <li class="{{ request()->routeIs('admin.manage.tasks') ? 'active' : '' }}">
+                                <a href="{{ route('admin.manage.tasks') }}">
+                                    <i class="fa fa-angle-right"></i> Manage Tasks
                                 </a>
                             </li>
                         </ul>
