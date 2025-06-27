@@ -28,6 +28,7 @@ return new class extends Migration
             $table->boolean('is_active')->default(true);
 
             $table->rememberToken();
+            $table->integer('otp')->nullable(); // OTP field for two-factor authentication
             $table->timestamps();
         });
 
