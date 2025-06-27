@@ -1,6 +1,12 @@
 <?php
 
+
+use App\Http\Controllers\admin\AdminController;
+use App\Http\Controllers\admin\ProfileController;
+use App\Http\Controllers\admin\SettingController;
+
 use App\Http\Controllers\user\UserController;
+
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Admin\AdminController;
@@ -18,11 +24,11 @@ Route::middleware(['auth'])->group(function () {
     // 🧑‍💼 AdminController routes
     Route::controller(AdminController::class)->group(function () {
         Route::get('/admin', 'dashboard')->name('admin.dashboard');
-
-        Route::get('/profiles', 'profiles')->name('profiles');
-        Route::get('/manage-profile/{id?}', 'manageProfile')->name('manage.profile');
     });
 
+
+Route::get('/admin/profiles', [ProfileController::class, 'profile'])->name('manage.profiles');
+Route::post('/profile/insert', [ProfileController::class, 'insert'])->name('profile.insert');
     // ⚙️ SettingController routes
     Route::controller(SettingController::class)->group(function () {
         Route::get('/admin/mail-settings', 'mailSettings')->name('admin.mail.settings');
@@ -37,3 +43,4 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('/user/dashboard', [UserController::class, 'dashboard'])->name('user.dashboard');
 });
+

@@ -4,12 +4,13 @@
     <div class="sidebar">
         <!-- Sidebar user panel -->
         <div class="user-panel">
-            <div class="image text-center"><img src="{{ asset('dist/img/img1.jpg') }}" class="img-circle" alt="User Image">
+            <div class="image text-center"><img src="{{ asset('dist/img/img1.jpg') }}" class="img-circle"
+                    alt="User Image">
             </div>
             <div class="info">
                 <p>Alexander Pierce</p>
-                <a href="#"><i class="fa fa-envelope"></i></a> <a href="#"><i class="fa fa-gear"></i></a> <a
-                    href="#"><i class="fa fa-power-off"></i></a>
+                <a href="#"><i class="fa fa-envelope"></i></a> <a href="#"><i class="fa fa-gear"></i></a> <a href="#"><i
+                        class="fa fa-power-off"></i></a>
             </div>
         </div>
 
@@ -82,13 +83,13 @@
                         </a>
                         <ul class="treeview-menu">
                             {{-- Use actual route names for app submenus below --}}
-                            <li class="{{ request()->routeIs('admin.whmcs.api.settings') ? 'active' : '' }}">
-                                <a href="{{ route('admin.whmcs.api.settings') }}">
+                            <li class="{{ request()->routeIs('') ? 'active' : '' }}">
+                                <a href="">
                                     <i class="fa fa-angle-right"></i> Profiles
                                 </a>
                             </li>
-                            <li class="{{ request()->routeIs('admin.mail.settings') ? 'active' : '' }}">
-                                <a href="{{ route('admin.mail.settings') }}">
+                            <li class="{{ request()->routeIs('manage.profiles') ? 'active' : '' }}">
+                                <a href="{{ route('manage.profiles') }}">
                                     <i class="fa fa-angle-right"></i> Add Profiles
                                 </a>
                             </li>
