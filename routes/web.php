@@ -9,8 +9,6 @@ use App\Http\Controllers\user\UserController;
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\LoginController;
-use App\Http\Controllers\Admin\AdminController;
-use App\Http\Controllers\Admin\SettingController;
 
 // 🔓 Public Login Routes
 Route::controller(LoginController::class)->group(function () {
@@ -19,7 +17,7 @@ Route::controller(LoginController::class)->group(function () {
 });
 
 // 🔒 Protected Admin Routes
-Route::middleware(['auth'])->group(function () {
+// Route::middleware(['auth'])->group(function () {
 
     // 🧑‍💼 AdminController routes
     Route::controller(AdminController::class)->group(function () {
@@ -39,8 +37,6 @@ Route::post('/profile/insert', [ProfileController::class, 'insert'])->name('prof
     });
 
     Route::get('/logout', [LoginController::class, 'logout'])->name('logout');
-
-
     Route::get('/user/dashboard', [UserController::class, 'dashboard'])->name('user.dashboard');
-});
+// });
 
