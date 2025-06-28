@@ -81,7 +81,8 @@
                                          <h4>Nikolaj S. Henriksen</h4>
                                          <p>I've finished it! See you so...</p>
                                          <p><span class="time">1:30 AM</span></p>
-                                     </a></li>
+                                     </a>
+                                    </li>
                                  <li><a href="#">
                                          <div class="pull-left icon-circle green"><i class="fa fa-paperclip"></i></div>
                                          <h4>Kasper S. Jessen</h4>

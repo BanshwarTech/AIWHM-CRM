@@ -9,7 +9,7 @@ class MailConfigHelper
 {
     public static function getMailSettings()
     {
-        $settings =     mail_setting::first(); // or wherever you store settings
+        $settings = mail_setting::first(); // or wherever you store settings
 
         if ($settings) {
             Config::set('mail.default', $settings->mail_mailer);
