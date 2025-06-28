@@ -16,7 +16,7 @@ Route::controller(LoginController::class)->group(function () {
     Route::get('/hash-password', 'generateHashPassword')->name('hash.password');
 });
 
-🔒 Protected Routes (Requires Authentication)
+// 🔒 Protected Routes (Requires Authentication)
 Route::middleware(['auth'])->group(function () {
     // 🧑 Admin Dashboard
     Route::get('/admin', [AdminController::class, 'dashboard'])->name('admin.dashboard');
@@ -40,13 +40,13 @@ Route::middleware(['auth'])->group(function () {
     // 👤 Profile
     Route::controller(ProfileController::class)->group(function () {
         Route::get('/profile', 'profile')->name('profile');
-        Route::get('/manage-profiles', 'manageProfile')->name('manage.profiles');
+        Route::get('/manage-profiles/{id?}', 'manageProfile')->name('manage.profiles');
         Route::post('/manage-profiles/create', 'manageProfilePost')->name('manage.profiles.create');
+
     });
 
     // 🔚 Logout
     Route::get('/logout', [LoginController::class, 'logout'])->name('logout');
-});
     // 👨‍💼 Team Leader Dashboards
     Route::prefix('team-leader')->controller(TeamLeaderController::class)->group(function () {
         Route::get('/sales/dashboard', 'salesDashboard')->name('team-leader.sales.dashboard');
