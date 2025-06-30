@@ -5,6 +5,8 @@
     <meta charset="UTF-8">
     <title>Login</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+
     <link rel="stylesheet" href="{{ asset('login/css/bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ asset('login/css/fontawesome-all.min.css') }}">
     <link rel="stylesheet" href="{{ asset('login/css/iofrm-style.css') }}">
@@ -28,7 +30,11 @@
 </head>
 
 <body>
-
+    @if (session('error'))
+        <div class="alert alert-danger">
+            {{ session('error') }}
+        </div>
+    @endif
     <div class="form-body">
         <div class="iofrm-layout">
             <div class="img-holder">
@@ -83,7 +89,14 @@
 
     <script src="{{ asset('login/js/jquery.min.js') }}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
-
+    <!-- ✅ AJAX CSRF Setup -->
+    <script>
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+    </script>
     <script>
         $(document).ready(function() {
             // Login submit

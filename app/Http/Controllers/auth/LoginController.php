@@ -13,6 +13,7 @@ use App\Helpers\MailConfigHelper;
 
 class LoginController extends Controller
 {
+
     public function showLoginForm()
     {
         return view('auth.login');
@@ -37,7 +38,7 @@ class LoginController extends Controller
             }
 
             $user = User::where('email', $request->email)->first();
-            if (!$user || !Hash::check($request->password, $user->password)) {
+            if (!$user || !Hash::check($request->password, $user->encrypted_password)) {
                 return response()->json([
                     'success' => false,
                     'message' => 'Invalid credentials.'
@@ -97,9 +98,45 @@ class LoginController extends Controller
 
 
             // ✅ Determine redirect based on role
-            $redirectUrl = ($user->role === 'admin')
-                ? route('admin.dashboard')
-                : route('user.dashboard'); // Make sure this route exists
+            if ($user->role === 'admin') {
+                $redirectUrl = route('admin.dashboard');
+            } elseif ($user->role === 'team-leader') {
+                switch ($user->department) {
+                    case 'sales':
+                        $redirectUrl = route('team-leader.sales.dashboard');
+                        break;
+                    case 'support':
+                        $redirectUrl = route('team-leader.support.dashboard');
+                        break;
+                    case 'seo':
+                        $redirectUrl = route('team-leader.seo.dashboard');
+                        break;
+                    case 'development':
+                        $redirectUrl = route('team-leader.development.dashboard');
+                        break;
+                    default:
+                        abort(403, 'Unauthorized department for team-leader.');
+                }
+            } elseif ($user->role === 'team-member') {
+                switch ($user->department) {
+                    case 'sales':
+                        $redirectUrl = route('team-member.sales.dashboard');
+                        break;
+                    case 'support':
+                        $redirectUrl = route('team-member.support.dashboard');
+                        break;
+                    case 'seo':
+                        $redirectUrl = route('team-member.seo.dashboard');
+                        break;
+                    case 'development':
+                        $redirectUrl = route('team-member.development.dashboard');
+                        break;
+                    default:
+                        abort(403, 'Unauthorized department for team-member.');
+                }
+            } else {
+                abort(403, 'Unauthorized role.');
+            }
 
             return response()->json([
                 'success' => true,
@@ -135,5 +172,10 @@ class LoginController extends Controller
     {
         auth()->logout();
         return redirect()->route('login')->with('success', 'You have been logged out successfully.');
+    }
+
+    public function generateHashPassword()
+    {
+        return Hash::make('nP6@zB!vT9#eW3qY');
     }
 }
