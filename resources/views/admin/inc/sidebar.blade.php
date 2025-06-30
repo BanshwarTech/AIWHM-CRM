@@ -19,9 +19,9 @@
                 <div class="user-panel">
                     <div class="image text-center">
 
-                        @if (session('USER_PROFILE_IMAGE'))
-                            <img src="{{ asset('uploads/profile/' . session('USER_PROFILE_IMAGE')) }}"
-                                class="img-circle" alt="User Image">
+                        @if ($user->profile_image)
+                            <img src="{{ asset('uploads/profile_images/' . $user->profile_image) }}" class="img-circle"
+                                alt="User Image">
                         @else
                             <img src="{{ asset('user-icon.webp') }}" class="img-circle" alt="User Image">
                         @endif
@@ -29,7 +29,7 @@
 
                     </div>
                     <div class="info">
-                        <p>{{ session('USER_NAME') }}</p>
+                        <p>{{ $user->name }}</p>
                         <a href="#"><i class="fa fa-envelope"></i></a>
                         <a href="#"><i class="fa fa-gear"></i></a>
                         <a href="#"><i class="fa fa-power-off"></i></a>
