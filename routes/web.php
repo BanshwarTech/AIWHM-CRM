@@ -1,10 +1,8 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\auth\LoginController;
-use App\Http\Controllers\TaskController;
+
 use App\Http\Controllers\admin\AdminController;
-use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\admin\ProfileController;
 use App\Http\Controllers\admin\SettingController;
 use App\Http\Controllers\TeamLeader\TeamLeaderController;
 use App\Http\Controllers\TeamMember\TeamMemberController;
@@ -14,13 +12,10 @@ use Illuminate\Http\Request;
 Route::controller(LoginController::class)->group(function () {
     Route::get('/', 'showLoginForm')->name('login');
     Route::post('login-post', 'loginPost')->name('login.post');
-    Route::get('/hash-password', 'generateHashPassword')->name('hash.password');
 });
 
-🔒 Protected Routes (Requires Authentication)
-Route::middleware(['auth'])->group(function () {
-    // 🧑 Admin Dashboard
-    Route::get('/admin', [AdminController::class, 'dashboard'])->name('admin.dashboard');
+// 🔒 Protected Admin Routes
+// Route::middleware(['auth'])->group(function () {
 
     // 📝 Task Management
     Route::prefix('tasks')->controller(TaskController::class)->group(function () {
@@ -31,14 +26,26 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/view/{id}', 'viewTask')->name('tasks.view');
     });
 
-    // ⚙️ Settings
-    Route::prefix('admin')->controller(SettingController::class)->group(function () {
-        Route::get('/mail-settings', 'mailSettings')->name('admin.mail.settings');
-        Route::post('/mail-settings/update', 'mailSettingsUpdate')->name('admin.mail.settings.update');
-        Route::get('/whmcs-api-settings', 'whmcsApiSettings')->name('admin.whmcs.api.settings');
-        Route::post('/whmcs-api-settings/update', 'updateWhmcsApiSettings')->name('admin.whmcs.api.settings.update');
+
+Route::get('/admin/profiles', [ProfileController::class, 'profile'])->name('manage.profiles');
+Route::post('/profile/insert', [ProfileController::class, 'insert'])->name('profile.insert');
+    // ⚙️ SettingController routes
+    Route::controller(SettingController::class)->group(function () {
+        Route::get('/admin/mail-settings', 'mailSettings')->name('admin.mail.settings');
+        Route::post('/admin/mail-settings/update', 'mailSettingsUpdate')->name('admin.mail.settings.update');
+
+        Route::get('/admin/whmcs-api-settings', 'whmcsApiSettings')->name('admin.whmcs.api.settings');
+        Route::post('/admin/whmcs-api-settings/update', 'updateWhmcsApiSettings')->name('admin.whmcs.api.settings.update');
     });
 
+<<<<<<< HEAD
+    Route::get('/logout', [LoginController::class, 'logout'])->name('logout');
+
+
+    Route::get('/user/dashboard', [UserController::class, 'dashboard'])->name('user.dashboard');
+// });
+
+=======
     // 👤 Profile
     Route::controller(ProfileController::class)->group(function () {
         Route::get('/profile', 'profile')->name('profile');
@@ -67,3 +74,4 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/development/dashboard', 'developmentDashboard')->name('team.member.development.dashboard');
     });
 });
+>>>>>>> 07e5eca027b68ae15e44530111aa8cdb0c633768
