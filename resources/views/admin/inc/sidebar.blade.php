@@ -83,8 +83,8 @@
                         </a>
                         <ul class="treeview-menu">
                             {{-- Use actual route names for app submenus below --}}
-                            <li class="{{ request()->routeIs('profile') ? 'active' : '' }}">
-                                <a href="{{ route('profile') }}">
+                            <li class="">
+                                <a href="">
                                     <i class="fa fa-angle-right"></i> Profiles
                                 </a>
                             </li>
