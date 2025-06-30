@@ -46,11 +46,11 @@ Route::middleware(['auth'])->group(function () {
         Route::post('/manage-profiles/create', 'manageProfilePost')->name('manage.profiles.create');
         Route::get('/my-profile', 'myProfile')->name('my.profile');
         Route::put('my-profile/update', 'updateMyProfile')->name('my.profile.update');
-
     });
 
     // 🔚 Logout
     Route::get('/logout', [LoginController::class, 'logout'])->name('logout');
+
     // 👨‍💼 Team Leader Dashboards
     Route::prefix('team-leader')->controller(TeamLeaderController::class)->group(function () {
         Route::get('/sales/dashboard', 'salesDashboard')->name('team.leader.sales.dashboard');
