@@ -8,6 +8,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\admin\SettingController;
 use App\Http\Controllers\TeamLeader\TeamLeaderController;
 use App\Http\Controllers\TeamMember\TeamMemberController;
+use Illuminate\Http\Request;
 
 // 🔓 Public Login Routes
 Route::controller(LoginController::class)->group(function () {
@@ -27,6 +28,7 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/manage/{id?}', 'manageTasks')->name('manage.tasks');
         Route::post('/manage/create/{id?}', 'manageTasksCreate')->name('manage.tasks.create');
         Route::delete('/destroy/{id}', 'destroyTask')->name('tasks.destroy');
+        Route::get('/view/{id}', 'viewTask')->name('tasks.view');
     });
 
     // ⚙️ Settings
@@ -40,8 +42,10 @@ Route::middleware(['auth'])->group(function () {
     // 👤 Profile
     Route::controller(ProfileController::class)->group(function () {
         Route::get('/profile', 'profile')->name('profile');
-        Route::get('/manage-profiles/{id?}', 'manageProfile')->name('manage.profiles');
+        Route::get('/manage-profiles', 'manageProfile')->name('manage.profiles');
         Route::post('/manage-profiles/create', 'manageProfilePost')->name('manage.profiles.create');
+        Route::get('/my-profile', 'myProfile')->name('my.profile');
+        Route::put('my-profile/update', 'updateMyProfile')->name('my.profile.update');
 
     });
 
@@ -49,17 +53,17 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/logout', [LoginController::class, 'logout'])->name('logout');
     // 👨‍💼 Team Leader Dashboards
     Route::prefix('team-leader')->controller(TeamLeaderController::class)->group(function () {
-        Route::get('/sales/dashboard', 'salesDashboard')->name('team-leader.sales.dashboard');
-        Route::get('/support/dashboard', 'supportDashboard')->name('team-leader.support.dashboard');
-        Route::get('/seo/dashboard', 'seoDashboard')->name('team-leader.seo.dashboard');
-        Route::get('/development/dashboard', 'developmentDashboard')->name('team-leader.development.dashboard');
+        Route::get('/sales/dashboard', 'salesDashboard')->name('team.leader.sales.dashboard');
+        Route::get('/support/dashboard', 'supportDashboard')->name('team.leader.support.dashboard');
+        Route::get('/seo/dashboard', 'seoDashboard')->name('team.leader.seo.dashboard');
+        Route::get('/development/dashboard', 'developmentDashboard')->name('team.leader.development.dashboard');
     });
 
     // 👨‍🔧 Team Member Dashboards
     Route::prefix('team-member')->controller(TeamMemberController::class)->group(function () {
-        Route::get('/sales/dashboard', 'salesDashboard')->name('team-member.sales.dashboard');
-        Route::get('/support/dashboard', 'supportDashboard')->name('team-member.support.dashboard');
-        Route::get('/seo/dashboard', 'seoDashboard')->name('team-member.seo.dashboard');
-        Route::get('/development/dashboard', 'developmentDashboard')->name('team-member.development.dashboard');
+        Route::get('/sales/dashboard', 'salesDashboard')->name('team.member.sales.dashboard');
+        Route::get('/support/dashboard', 'supportDashboard')->name('team.member.support.dashboard');
+        Route::get('/seo/dashboard', 'seoDashboard')->name('team.member.seo.dashboard');
+        Route::get('/development/dashboard', 'developmentDashboard')->name('team.member.development.dashboard');
     });
 });

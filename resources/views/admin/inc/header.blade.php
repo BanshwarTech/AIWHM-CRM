@@ -104,28 +104,28 @@
                  <!-- User Account  -->
                  <li class="dropdown user user-menu p-ph-res"> <a href="#" class="dropdown-toggle"
                          data-toggle="dropdown"> 
-                        @if (session('USER_PROFILE_IMAGE'))
-                            <img src="{{ asset('uploads/profile/' . session('USER_PROFILE_IMAGE')) }}"
+                        @if ($user->profile_image)
+                            <img src="{{ asset('uploads/profile_images/' . $user->profile_image) }}"
                                  class="user-image" alt="User Image">
                         @else
                             <img src="{{ asset('user-icon.webp') }}"  class="user-image" alt="User Image">
                         @endif
 
-                         <span class="hidden-xs">{{ session('USER_NAME') }}</span> </a>
+                         <span class="hidden-xs">{{ $user->name }}</span> </a>
                      <ul class="dropdown-menu">
                          <li class="user-header">
                              <div class="pull-left user-img">
-                                 @if (session('USER_PROFILE_IMAGE'))
-                                     <img src="{{ asset('uploads/profile/' . session('USER_PROFILE_IMAGE')) }}"
+                                 @if ($user->profile_image)
+                                     <img src="{{ asset('uploads/profile_images/' . $user->profile_image) }}"
                                           class="img-responsive img-circle" alt="User">
                                  @else
                                      <img src="{{ asset('user-icon.webp') }}" class="img-responsive img-circle" alt="User">
                                  @endif
                              </div>
-                             <p class="text-left">{{ session('USER_NAME') }} <small style="font-size: 10px;">{{ session('USER_EMAIL') }}</small>
+                             <p class="text-left">{{ $user->name  }} <small style="font-size: 10px;">{{ session('USER_EMAIL') }}</small>
                              </p>
                          </li>
-                         <li><a href="#"><i class="icon-profile-male"></i> My Profile</a></li>
+                         <li><a href="{{ route('my.profile') }}"><i class="icon-profile-male"></i> My Profile</a></li>
                          <li><a href="#"><i class="icon-wallet"></i> My Balance</a></li>
                          <li><a href="#"><i class="icon-envelope"></i> Inbox</a></li>
                          <li role="separator" class="divider"></li>

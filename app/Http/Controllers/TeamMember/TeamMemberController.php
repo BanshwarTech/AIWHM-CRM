@@ -9,21 +9,25 @@ class TeamMemberController extends Controller
 {
     public function salesDashboard()
     {
-        return view('team-leader.sales-dashboard');
+        $result['user'] = currentUser();
+        return view('team-member.dashboards.sales-dashboard', $result);
     }
 
     public function supportDashboard()
     {
-        return view('team-leader.support-dashboard');
+        $result['user'] = currentUser();
+        return view('team-member.dashboards.support-dashboard', $result);
     }
 
     public function seoDashboard()
     {
-        return view('team-leader.seo-dashboard');
+        $result['user'] = currentUser();
+        return view('team-member.dashboards.seo-dashboard', $result);
     }
 
     public function developmentDashboard()
     {
-        return view('team-member.development-dashboard');
+        $result['user'] = currentUser();
+        return view('team-member.dashboards.development-dashboard', $result);
     }
 }

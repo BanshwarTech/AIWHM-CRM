@@ -14,6 +14,7 @@ class TaskController extends Controller
     public function tasks()
     {
         $result['tasks'] = task::with('user')->get();
+        $result['user'] = currentUser();
         return view('common.tasks', $result);
     }
 
@@ -21,7 +22,7 @@ class TaskController extends Controller
     {
         $result['task'] = $id ? Task::with('user')->findOrFail($id) : null;
         $result['users'] = User::select('id', 'name')->where('role', '!=', 'admin')->get();
-
+        $result['user'] = currentUser();
         return view('common.manage-tasks', $result);
     }
 
@@ -77,5 +78,10 @@ class TaskController extends Controller
             Log::error('Task deletion failed: ' . $e->getMessage());
             return redirect()->back()->with('error', 'An error occurred while deleting the task.');
         }
+    }
+    public function viewTask()
+    {
+        $result['user'] = currentUser();
+        return view('common.view-task', $result);
     }
 }

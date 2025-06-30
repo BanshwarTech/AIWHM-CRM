@@ -1,13 +1,29 @@
-@extends('admin.inc.layouts')
+@php
+    $role = session('USER_ROLE');
+    $layout = match ($role) {
+        'admin' => 'admin.inc.layouts',
+        'team-leader' => 'team-leader.inc.layout',
+        'team-member' => 'team-member.inc.layout',
+    };
+    $content = match ($role) {
+        'admin' => 'admin-content',
+        'team-leader' => 'teamleader-content',
+        'team-member' => 'teammember-content',
+    };
+@endphp
 
-@section('parentMenu', 'Tasks')
-@section('page-title', 'Manage Tasks')
+@extends($layout)
 
-@section('admin-content')
+
+@section('parentMenu', 'Task')
+@section('page-title', 'Manage Task')
+
+@section($content)
     <div class="card">
+        <div class="card-header " style="background: #ddd;padding:10px 16px 0px 16px">
+            <h5 class="text-black fw-bold">{{ isset($task) ? 'Update ' : 'Create ' }} Task</h5>
+        </div>
         <div class="card-body">
-            <h4 class="text-black">{{ isset($task) ? 'Update ' : 'Create ' }} Task</h4>
-
             <form class="form-horizontal form-material" action="{{ route('manage.tasks.create', $task->id ?? '') }}"
                 method="POST">
                 @csrf

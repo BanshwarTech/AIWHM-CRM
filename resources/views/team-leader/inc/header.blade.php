@@ -609,8 +609,8 @@
             </li>
             <li class="nav-item dropdown">
                 <a href="javascrpt:;" class="dropdown-toggle dropdown-toggle-nocaret" data-bs-toggle="dropdown">
-                    @if (session('USER_PROFILE_IMAGE'))
-                        <img src="{{ asset('uploads/profile/' . session('USER_PROFILE_IMAGE')) }}"
+                    @if ($user->profile_image)
+                        <img src="{{ asset('uploads/profile_images/' . $user->profile_image) }}"
                             class="rounded-circle p-1 border" width="45" height="45" alt="">
                     @else
                         <img src="{{ asset('user-icon.webp') }}" class="rounded-circle p-1 border" width="45"
@@ -622,8 +622,8 @@
                     <a class="dropdown-item  gap-2 py-2" href="javascript:;">
                         <div class="text-center">
 
-                            @if (session('USER_PROFILE_IMAGE'))
-                                <img src="{{ asset('uploads/profile/' . session('USER_PROFILE_IMAGE')) }}"
+                            @if ($user->profile_image)
+                                <img src="{{ asset('uploads/profile_images/' . $user->profile_image) }}"
                                     class="rounded-circle p-1 shadow mb-3" width="90" height="90"
                                     alt="">
                             @else
@@ -631,13 +631,14 @@
                                     width="90" height="90" alt="">
                             @endif
 
-                            <h5 class="user-name mb-1 fw-bold">Hello, {{ session('USER_NAME') }}</h5>
+                            <h5 class="user-name mb-1 fw-bold">Hello, {{ $user->name }}</h5>
                             <h6>{{ Session('USER_EMAIL') }}</h6>
                         </div>
                     </a>
                     <hr class="dropdown-divider">
-                    <a class="dropdown-item d-flex align-items-center gap-2 py-2" href="javascript:;"><i
-                            class="material-icons-outlined">person_outline</i>Profile</a>
+                    <a class="dropdown-item d-flex align-items-center gap-2 py-2" href="{{ route('my.profile') }}">
+                        <i class="material-icons-outlined">person_outline</i>
+                        My Profile</a>
                     <a class="dropdown-item d-flex align-items-center gap-2 py-2" href="javascript:;"><i
                             class="material-icons-outlined">local_bar</i>Setting</a>
                     <a class="dropdown-item d-flex align-items-center gap-2 py-2" href="javascript:;"><i

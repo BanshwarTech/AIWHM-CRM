@@ -14,6 +14,7 @@ class SettingController extends Controller
     public function mailSettings()
     {
         $result['data'] = mail_setting::first();
+        $result['user'] = currentUser();
         // dd($result);
         return view('admin.mail-settings', $result);
     }
@@ -69,6 +70,7 @@ class SettingController extends Controller
     public function whmcsApiSettings()
     {
         $result['data'] = whmcs_setting::first();
+        $result['user'] = currentUser();
         // dd($result);
         return view('admin.whmcs-api-settings', $result);
     }

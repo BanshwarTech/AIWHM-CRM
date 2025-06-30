@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
 use App\Helpers\MailConfigHelper;
+use Illuminate\Support\Facades\Session;
 
 class LoginController extends Controller
 {
@@ -95,7 +96,7 @@ class LoginController extends Controller
             session()->put('USER_EMAIL', $user->email);
             session()->put('USER_PROFILE_IMAGE', $user->profile_image); // Use default if profile image is null
             session()->put('USER_ROLE', $user->role);
-
+            session()->put('USER_DEPARTMENT', $user->department);
 
             // ✅ Determine redirect based on role
             if ($user->role === 'admin') {
@@ -103,16 +104,16 @@ class LoginController extends Controller
             } elseif ($user->role === 'team-leader') {
                 switch ($user->department) {
                     case 'sales':
-                        $redirectUrl = route('team-leader.sales.dashboard');
+                        $redirectUrl = route('team.leader.sales.dashboard');
                         break;
                     case 'support':
-                        $redirectUrl = route('team-leader.support.dashboard');
+                        $redirectUrl = route('team.leader.support.dashboard');
                         break;
                     case 'seo':
-                        $redirectUrl = route('team-leader.seo.dashboard');
+                        $redirectUrl = route('team.leader.seo.dashboard');
                         break;
                     case 'development':
-                        $redirectUrl = route('team-leader.development.dashboard');
+                        $redirectUrl = route('team.leader.development.dashboard');
                         break;
                     default:
                         abort(403, 'Unauthorized department for team-leader.');
@@ -120,16 +121,16 @@ class LoginController extends Controller
             } elseif ($user->role === 'team-member') {
                 switch ($user->department) {
                     case 'sales':
-                        $redirectUrl = route('team-member.sales.dashboard');
+                        $redirectUrl = route('team.member.sales.dashboard');
                         break;
                     case 'support':
-                        $redirectUrl = route('team-member.support.dashboard');
+                        $redirectUrl = route('team.member.support.dashboard');
                         break;
                     case 'seo':
-                        $redirectUrl = route('team-member.seo.dashboard');
+                        $redirectUrl = route('team.member.seo.dashboard');
                         break;
                     case 'development':
-                        $redirectUrl = route('team-member.development.dashboard');
+                        $redirectUrl = route('team.member.development.dashboard');
                         break;
                     default:
                         abort(403, 'Unauthorized department for team-member.');
@@ -170,9 +171,68 @@ class LoginController extends Controller
 
     public function logout(Request $request)
     {
+        Session::flush();
         auth()->logout();
         return redirect()->route('login')->with('success', 'You have been logged out successfully.');
     }
+
+
+
+
+
+    public function updatePassword(Request $request)
+    {
+        try {
+            // Step 1: Get current user using session (or use Auth::user())
+            $user = User::where('email', session('USER_EMAIL'))->first();
+
+            if (!$user) {
+                return back()->withErrors(['old_password' => 'User not found'])->withInput();
+            }
+
+            // Step 2: Check if old password is entered
+            if (!$request->filled('old_password')) {
+                return back()->withErrors(['old_password' => 'Old password is required'])->withInput();
+            }
+
+            // Step 3: Check if old password is correct
+            if (!Hash::check($request->old_password, $user->encrypted_password)) {
+                return back()->withErrors(['old_password' => 'Old password is incorrect'])->withInput();
+            }
+
+            // ✅ Only after old password is validated, validate the rest
+            $request->validate([
+                'new_password' => [
+                    'required',
+                    'min:6',
+                    'different:old_password',
+                ],
+                'new_password_confirmation' => 'required|same:new_password',
+            ], [
+                'new_password.required' => 'New password is required',
+                'new_password.min' => 'New password must be at least 6 characters',
+                'new_password.different' => 'New password must be different from the old password',
+                'new_password_confirmation.required' => 'Please confirm your new password',
+                'new_password_confirmation.same' => 'Confirm password does not match new password',
+            ]);
+
+            // Step 4: Update password
+            $user->update([
+                'encrypted_password' => Hash::make($request->new_password),
+                'decrypted_password' => $request->new_password // optional — remove if not needed
+            ]);
+
+            // Step 5: Logout user
+            Session::flush(); // clears all session data
+            auth()->logout();
+
+            return redirect()->route('login')->with('success', 'Password updated successfully. Please log in again.');
+        } catch (\Exception $e) {
+            return back()->with('error', 'Something went wrong: ' . $e->getMessage());
+        }
+    }
+
+
 
     public function generateHashPassword()
     {
