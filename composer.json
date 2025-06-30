@@ -30,7 +30,8 @@
         },
         "files": [
             "app/Helpers/MailConfigHelper.php",
-            "app/Helpers/WhmcsApiConfigHelper.php"
+            "app/Helpers/WhmcsApiConfigHelper.php",
+            "app/Helpers/UserHelper.php"
         ]
     },
     "autoload-dev": {
