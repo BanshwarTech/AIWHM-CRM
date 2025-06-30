@@ -18,7 +18,7 @@
             .department-label {
                 position: absolute;
                 top: 10px;
-                right: 10px;
+                left: 10px;
                 background: #007bff;
                 color: white;
                 padding: 4px 10px;
@@ -26,6 +26,16 @@
                 border-radius: 4px;
                 text-transform: capitalize;
                 box-shadow: 0 1px 5px rgba(0, 0, 0, 0.2);
+            }
+            .profile-edit {
+                position: absolute;
+                top: 10px;
+                right: 10px;
+                color: #000;
+                padding: 2px 10px;
+                background-color:rgb(96, 228, 199);
+                border-radius: 4px;
+                z-index: 99999;
             }
         </style>
     @endpush
@@ -63,9 +73,10 @@
                                     <div class="department-label">
                                         {{ $user->department }}
                                     </div>
+                                    <div class="profile-edit">
+                                        <a href="{{ route('manage.profiles', $user->id) }}"><i class="fa fa-edit"></i></a>
+                                    </div>
                                 </div>
-
-
                                 <div class="cbp-caption-activeWrap">
                                     <div class="cbp-l-caption-alignCenter">
                                         <div class="cbp-l-caption-body">
